@@ -15,12 +15,14 @@ duty_cycle = 100* pot_reading/1023
 #find the temp
 T_25 = 298.15
 R_25 = 3300
-B = 3892.56
+B = 2.569850 / 10000
+C = 2.620131 / 1000000
+D = 6.383091 / 100000000
 R0 = 1000
 
 def find_temp(therm_reading):
     R_T = R0 * ((1023-therm_reading)/therm_reading)
-    temp = 1/((1/T_25) + ((1/B) * np.log(R_T/R_25)))
+    temp = 1/((1/T_25) + ((B) * np.log(R_T/R_25))) + (C * (np.log(R_T/R_25)**2)) + (D * (np.log(R_T/R_25)**3))
 
     return temp
 
